@@ -1,4 +1,4 @@
-package org.ops4j.serde;
+package org.ops4j.jdbc.serde;
 
 import java.io.IOException;
 import java.sql.JDBCType;

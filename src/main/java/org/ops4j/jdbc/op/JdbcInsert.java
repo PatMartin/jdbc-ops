@@ -1,4 +1,4 @@
-package org.ops4j.op.jdbc;
+package org.ops4j.jdbc.op;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

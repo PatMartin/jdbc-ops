@@ -1,11 +1,11 @@
-package org.ops4j.util;
+package org.ops4j.jdbc.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 
+import org.ops4j.jdbc.serde.ResultSetSerializer;
 import org.ops4j.log.OpLogger;
-import org.ops4j.serde.ResultSetSerializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

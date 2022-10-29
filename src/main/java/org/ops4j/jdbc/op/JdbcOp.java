@@ -1,4 +1,4 @@
-package org.ops4j.op.jdbc;
+package org.ops4j.jdbc.op;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import org.ops4j.base.BaseOp;
 import org.ops4j.exception.OpsException;
-import org.ops4j.util.ResultSetIterator;
+import org.ops4j.jdbc.util.ResultSetIterator;
 
 import lombok.Getter;
 import lombok.Setter;

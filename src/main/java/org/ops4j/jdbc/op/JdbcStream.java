@@ -1,4 +1,4 @@
-package org.ops4j.op.jdbc;
+package org.ops4j.jdbc.op;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +11,8 @@ import org.ops4j.cli.OpCLI;
 import org.ops4j.exception.OpsException;
 import org.ops4j.inf.JsonSource;
 import org.ops4j.inf.Op;
+import org.ops4j.jdbc.util.ResultSetIterator;
 import org.ops4j.log.OpLogger;
-import org.ops4j.util.ResultSetIterator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.auto.service.AutoService;
