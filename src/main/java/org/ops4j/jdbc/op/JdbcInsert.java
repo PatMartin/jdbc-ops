@@ -9,6 +9,7 @@ import org.ops4j.OpData;
 import org.ops4j.cli.OpCLI;
 import org.ops4j.exception.OpsException;
 import org.ops4j.inf.Op;
+import org.ops4j.util.JacksonUtil;
 
 import com.google.auto.service.AutoService;
 
@@ -46,8 +47,19 @@ public class JdbcInsert extends JdbcOp<JdbcInsert>
     return this;
   }
 
-  public List<OpData> execute(OpData input)
+  public List<OpData> execute(OpData input) throws OpsException
   {
+    DEBUG("Inserting...: ", getSql());
+    String isql = JacksonUtil.interpolate(getSql(), input.getJson());
+    DEBUG("Interpolated: ", isql);
+    try
+    {
+      statement.executeUpdate(isql);
+    }
+    catch(SQLException ex)
+    {
+      throw new OpsException(ex);
+    }
     return input.asList();
   }
 
