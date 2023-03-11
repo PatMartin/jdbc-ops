@@ -12,7 +12,6 @@ import org.ops4j.exception.OpsException;
 import org.ops4j.inf.JsonSource;
 import org.ops4j.inf.Op;
 import org.ops4j.jdbc.util.ResultSetIterator;
-import org.ops4j.log.OpLogger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.auto.service.AutoService;
@@ -22,16 +21,16 @@ import lombok.Setter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@AutoService(Op.class)
-@Command(name = "jdbc:stream", description = "Stream documents from mongo.")
+@AutoService(Op.class) @Command(name = "jdbc:stream",
+    description = "Stream documents to and from a jdbc source.")
 public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
 {
-  @Parameters(index = "0", arity = "1", description = "The query.")
-  private @Getter @Setter String    query;
-
-  private @Getter ResultSetIterator it = null;
+  private @Getter ResultSetIterator it  = null;
   private Statement                 statement;
   private ResultSet                 rs;
+
+  @Parameters(index = "0", arity = "0..1", description = "The database sql.")
+  private @Getter @Setter String    sql = null;
 
   public JdbcStream()
   {
@@ -50,7 +49,8 @@ public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
     try
     {
       statement = getConnection().createStatement();
-      rs = statement.executeQuery(getQuery());
+      rs = statement
+          .executeQuery(fallback(getSql(), getConfig().getString("sql")));
       it = new ResultSetIterator(rs);
     }
     catch(SQLException ex)
@@ -63,7 +63,6 @@ public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
   public List<OpData> execute(OpData input)
   {
     JsonNode node = it.next();
-    OpLogger.syserr("NODE-EXECUTE: ", node);
     return new OpData(node).asList();
   }
 

@@ -22,8 +22,8 @@ import picocli.CommandLine.Parameters;
     description = "Insert recoreds into a JDBC table.")
 public class JdbcInsert extends JdbcOp<JdbcInsert>
 {
-  @Parameters(index = "0", arity = "1", description = "The query.")
-  private @Getter @Setter String query;
+  @Parameters(index = "0", arity = "1", description = "The sql.")
+  private @Getter @Setter String sql = null;
 
   private Statement              statement;
   private ResultSet              rs;

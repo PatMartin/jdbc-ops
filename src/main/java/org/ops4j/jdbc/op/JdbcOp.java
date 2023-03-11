@@ -11,38 +11,32 @@ import lombok.Getter;
 import lombok.Setter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
 
 @Command(name = "jdbc:op",
     description = "Insert documents into a mongo collection.")
 public abstract class JdbcOp<T extends JdbcOp<?>> extends BaseOp<JdbcOp<T>>
 {
-  @Option(names = { "-c", "-class" }, required = false,
+  @Option(names = { "--driver" }, required = false,
       description = "The driver class.")
-  private @Getter @Setter String     driverClass = "org.postgresql.Driver";
+  private @Getter @Setter String     driverClass;
 
-  @Option(names = { "-u", "-url" }, required = false,
+  @Option(names = { "--url" }, required = false,
       description = "The connection url.")
-  private @Getter
-  @Setter String                     url         = "jdbc:postgresql://localhost:5432/ops";
+  private @Getter @Setter String     url;
 
-  @Option(names = { "-d", "-db" }, description = "The database name.")
-  private @Getter @Setter String     db          = "test";
+  @Option(names = { "--db" }, description = "The database name.")
+  private @Getter @Setter String     db;
 
-  @Option(names = { "-U", "-user" }, required = false,
-      description = "The username.")
-  private @Getter @Setter String     username    = "postgres";
+  @Option(names = { "--user" }, required = false, description = "The username.")
+  private @Getter @Setter String     username;
 
-  @Option(names = { "-s", "-schema" }, required = false,
+  @Option(names = { "--schema" }, required = false,
       description = "The db schema.")
-  private @Getter @Setter String     schema      = "local1";
+  private @Getter @Setter String     schema;
 
-  @Option(names = { "-p", "-password" }, required = false,
+  @Option(names = { "-p", "--password" }, required = false,
       description = "The password.")
-  private @Getter @Setter String     password    = "local1";
-
-  @Parameters(index = "0", arity = "1", description = "The database insertion.")
-  private @Getter @Setter String     sql         = null;
+  private @Getter @Setter String     password;
 
   private @Getter @Setter Connection connection;
 
@@ -67,13 +61,12 @@ public abstract class JdbcOp<T extends JdbcOp<?>> extends BaseOp<JdbcOp<T>>
       // connection = DriverManager.getConnection(
       // "jdbc:hsqldb:file:C:/ws/ops4j-all/test/db/testdb;shutdown=true", "SA",
       // "");
-      Class.forName(getDriverClass());
-      connection = DriverManager.getConnection(getUrl(), getUsername(),
-          getPassword());
-      if (getSchema() != null && getSchema().trim().length() > 0)
-      {
-        connection.setSchema(getSchema());
-      }
+      Class
+          .forName(fallback(getDriverClass(), getConfig().getString("driver")));
+      connection = DriverManager.getConnection(
+          fallback(getUrl(), getConfig().getString("url")),
+          fallback(getUsername(), getConfig().getString("username")),
+          fallback(getPassword(), getConfig().getString("password")));
     }
     catch(SQLException | ClassNotFoundException ex)
     {
@@ -84,7 +77,6 @@ public abstract class JdbcOp<T extends JdbcOp<?>> extends BaseOp<JdbcOp<T>>
 
   public JdbcOp<T> close() throws OpsException
   {
-
     try
     {
       connection.close();
