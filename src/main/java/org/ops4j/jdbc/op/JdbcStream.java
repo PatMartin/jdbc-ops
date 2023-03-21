@@ -66,7 +66,7 @@ public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
     return new OpData(node).asList();
   }
 
-  public JdbcStream close() throws OpsException
+  public List<OpData> close() throws OpsException
   {
     try
     {
@@ -78,7 +78,7 @@ public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
       throw new OpsException(ex);
     }
     super.close();
-    return this;
+    return OpData.emptyList();
   }
 
   public static void main(String args[]) throws OpsException

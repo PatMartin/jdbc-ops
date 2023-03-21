@@ -2,8 +2,10 @@ package org.ops4j.jdbc.op;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import org.ops4j.Lifecycle;
+import org.ops4j.OpData;
 import org.ops4j.cli.OpCLI;
 import org.ops4j.exception.OpsException;
 import org.ops4j.inf.Op;
@@ -45,7 +47,7 @@ public class JdbcDrop extends JdbcOp<JdbcDrop>
     return this;
   }
 
-  public JdbcDrop close() throws OpsException
+  public List<OpData> close() throws OpsException
   {
     try
     {
@@ -56,7 +58,7 @@ public class JdbcDrop extends JdbcOp<JdbcDrop>
       throw new OpsException(ex);
     }
     super.close();
-    return this;
+    return OpData.emptyList();
   }
 
   public static void main(String args[]) throws OpsException

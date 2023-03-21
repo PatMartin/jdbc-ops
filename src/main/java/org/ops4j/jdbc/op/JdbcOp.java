@@ -3,7 +3,9 @@ package org.ops4j.jdbc.op;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.ops4j.OpData;
 import org.ops4j.base.BaseOp;
 import org.ops4j.exception.OpsException;
 
@@ -75,7 +77,7 @@ public abstract class JdbcOp<T extends JdbcOp<?>> extends BaseOp<JdbcOp<T>>
     return this;
   }
 
-  public JdbcOp<T> close() throws OpsException
+  public List<OpData>close() throws OpsException
   {
     try
     {
@@ -86,6 +88,6 @@ public abstract class JdbcOp<T extends JdbcOp<?>> extends BaseOp<JdbcOp<T>>
       throw new OpsException(ex);
     }
     super.close();
-    return this;
+    return OpData.emptyList();
   }
 }

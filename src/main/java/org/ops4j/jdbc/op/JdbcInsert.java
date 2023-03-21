@@ -63,7 +63,7 @@ public class JdbcInsert extends JdbcOp<JdbcInsert>
     return input.asList();
   }
 
-  public JdbcInsert close() throws OpsException
+  public List<OpData> close() throws OpsException
   {
     try
     {
@@ -74,7 +74,7 @@ public class JdbcInsert extends JdbcOp<JdbcInsert>
       throw new OpsException(ex);
     }
     super.close();
-    return this;
+    return OpData.emptyList();
   }
 
   public static void main(String args[]) throws OpsException

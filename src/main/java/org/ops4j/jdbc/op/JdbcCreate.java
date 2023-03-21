@@ -15,8 +15,8 @@ import org.ops4j.cli.OpCLI;
 import org.ops4j.exception.OpsException;
 import org.ops4j.inf.Op;
 import org.ops4j.jdbc.util.JdbcUtil;
-import org.ops4j.jdbc.util.TypeGuesser;
-import org.ops4j.jdbc.util.TypeGuesser.InferredType;
+import org.ops4j.util.TypeGuesser;
+import org.ops4j.util.TypeGuesser.InferredType;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.auto.service.AutoService;
@@ -199,7 +199,7 @@ public class JdbcCreate extends JdbcOp<JdbcCreate>
     pstmt.execute();
   }
 
-  public JdbcCreate close() throws OpsException
+  public List<OpData> close() throws OpsException
   {
     try
     {
@@ -214,7 +214,7 @@ public class JdbcCreate extends JdbcOp<JdbcCreate>
       // Best effort, ignore.
     }
     super.close();
-    return this;
+    return OpData.emptyList();
   }
 
   public static void main(String args[]) throws OpsException
