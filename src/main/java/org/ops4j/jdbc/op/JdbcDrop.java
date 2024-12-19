@@ -18,17 +18,18 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 @AutoService(Op.class)
-@Command(name = "jdbc:drop", description = "Drop a table.")
+@Command(name = "jdbc-drop", description = "Drop a table.")
 public class JdbcDrop extends JdbcOp<JdbcDrop>
 {
-  @Parameters(index = "0", arity = "0..1", description = "The table to drop.")
+  @Parameters(index = "0", arity = "0..1", description = "The table to drop."
+      + "  DEFAULT='${DEFAULT-VALUE}'")
   private @Getter @Setter String table = "OPS.OPS_TEMP";
 
   private Statement              statement;
 
   public JdbcDrop()
   {
-    super("jdbc:drop");
+    super("jdbc-drop");
     setLifecycle(Lifecycle.withPhases(PhaseType.OPEN, PhaseType.CLOSE));
   }
 

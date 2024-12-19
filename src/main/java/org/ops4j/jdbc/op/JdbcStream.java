@@ -21,7 +21,7 @@ import lombok.Setter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@AutoService(Op.class) @Command(name = "jdbc:stream",
+@AutoService(Op.class) @Command(name = "jdbc-stream",
     description = "Stream documents to and from a jdbc source.")
 public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
 {
@@ -34,7 +34,7 @@ public class JdbcStream extends JdbcOp<JdbcStream> implements JsonSource
 
   public JdbcStream()
   {
-    super("jdbc:stream");
+    super("jdbc-stream");
   }
 
   public JdbcStream initialize() throws OpsException

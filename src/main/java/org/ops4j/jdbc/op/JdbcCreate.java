@@ -27,18 +27,19 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@AutoService(Op.class) @Command(name = "jdbc:create",
+@AutoService(Op.class) @Command(name = "jdbc-create",
     description = "Stream data into a jdbc table which will be created "
         + "dynamically.")
 public class JdbcCreate extends JdbcOp<JdbcCreate>
 {
   @Parameters(index = "0", arity = "0..1",
-      description = "The table to create. 'OPS_TEMP' by default.")
+      description = "The table to create.   DEFAULT='${DEFAULT-VALUE}'")
   public @Getter @Setter String     target    = "OPS_TEMP";
 
   @Option(names = { "--threshold" },
       description = "The commit threshold.  This represents the number of "
-          + "records to be used in schema inference.  Default = 100.")
+          + "records to be used in schema inference.  "
+          + "DEFAULT='${DEFAULT-VALUE}'")
   public @Getter @Setter int        threshold = 100;
 
   private List<ObjectNode>          data      = new ArrayList<ObjectNode>();
@@ -48,7 +49,7 @@ public class JdbcCreate extends JdbcOp<JdbcCreate>
 
   public JdbcCreate()
   {
-    super("jdbc:create");
+    super("jdbc-create");
   }
 
   public JdbcCreate open() throws OpsException

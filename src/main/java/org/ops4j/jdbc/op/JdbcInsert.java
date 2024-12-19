@@ -18,7 +18,7 @@ import lombok.Setter;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@AutoService(Op.class) @Command(name = "jdbc:insert",
+@AutoService(Op.class) @Command(name = "jdbc-insert",
     description = "Insert recoreds into a JDBC table.")
 public class JdbcInsert extends JdbcOp<JdbcInsert>
 {
@@ -30,7 +30,7 @@ public class JdbcInsert extends JdbcOp<JdbcInsert>
 
   public JdbcInsert()
   {
-    super("jdbc:insert");
+    super("jdbc-insert");
   }
 
   public JdbcInsert open() throws OpsException
